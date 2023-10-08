@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Account\RegisterRequest;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -19,7 +20,8 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        var_dump($request->validated());
-        return $this->success();
+        return $this->success([
+            'user' => (new UserService)->register($request->validated())
+        ]);
     }
 }
