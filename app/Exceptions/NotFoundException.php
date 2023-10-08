@@ -6,6 +6,8 @@ use Exception;
 
 class NotFoundException extends Exception
 {
+    use TraitException;
+
     /**
      * Message
      *
@@ -14,14 +16,9 @@ class NotFoundException extends Exception
     protected $message = "The resource was not found.";
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * Code
+     *
+     * @var integer
      */
-    public function render()
-    {
-        return response()->json([
-            "success" => false,
-            "error" => class_basename($this),
-            "message" => $this->message
-        ], 404);
-    }
+    protected $code = 404;
 }
