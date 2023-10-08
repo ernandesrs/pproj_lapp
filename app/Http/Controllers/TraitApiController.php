@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-trait ApiController
+trait TraitApiController
 {
     /**
      * Success response
