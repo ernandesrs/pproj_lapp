@@ -25,7 +25,8 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        NotFoundException::class
+        NotFoundException::class,
+        InvalidDataException::class
     ];
 
     /**
