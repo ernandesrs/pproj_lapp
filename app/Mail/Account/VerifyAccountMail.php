@@ -27,7 +27,8 @@ class VerifyAccountMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->user->first_name . ', confirme a criação da sua conta.',
+            from: new \Illuminate\Mail\Mailables\Address(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME')),
+            subject: '[' . env('APP_NAME') . '] ' . $this->user->first_name . ', confirme a criação da sua conta.',
         );
     }
 
