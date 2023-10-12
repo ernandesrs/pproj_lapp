@@ -6,7 +6,7 @@ use App\Http\Controllers\LappController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-\Auth::attempt(['email' => 'psnaomeaaaaba@mail.com', 'password' => 'ernandes']);
+\Auth::attempt(['email' => 'psnaomeaaba@mail.com', 'password' => 'ernandes']);
 
 Route::get('/', [LappController::class, 'index']);
 Route::group([
