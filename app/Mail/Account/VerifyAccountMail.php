@@ -40,7 +40,7 @@ class VerifyAccountMail extends Mailable
             markdown: 'emails.account.verify-account',
             with: [
                 'firstName' => $this->user->first_name,
-                'url' => env('APP_URL') . '?token=V&rification_tok&en_here'
+                'url' => config('lapp.front.urls.register_verification') . '?token=' . $this->user->verification_token
             ]
         );
     }
