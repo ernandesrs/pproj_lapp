@@ -15,6 +15,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         \App\Events\Account\UserRegisteredEvent::class => [
             \App\Listeners\Account\SendRegisterVerificationLinkListener::class
+        ],
+        \App\Events\Account\VerificationLinkResendEvent::class => [
+            \App\Listeners\Account\SendRegisterVerificationLinkListener::class
         ]
     ];
 

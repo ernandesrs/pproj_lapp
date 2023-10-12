@@ -37,4 +37,16 @@ class RegisterController extends Controller
 
         return $this->success();
     }
+
+    /**
+     * Resend verification link
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resendVerificationLink()
+    {
+        (new UserService)->resendVerificationLink();
+
+        return $this->success();
+    }
 }

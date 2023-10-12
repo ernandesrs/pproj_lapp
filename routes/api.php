@@ -6,16 +6,24 @@ use App\Http\Controllers\LappController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-\Auth::attempt(['email' => 'psnaomeaaaba@mail.com', 'password' => 'ernandes']);
+\Auth::attempt(['email' => 'psnaomeaaaaba@mail.com', 'password' => 'ernandes']);
 
 Route::get('/', [LappController::class, 'index']);
 Route::group([
     'prefix' => 'account'
 ], function () {
 
-    Route::post('register', [RegisterController::class, 'register']);
-    Route::patch('register-verify/{token}', [RegisterController::class, 'registerVerify'])
-        ->middleware(['auth']);
+    Route::group([
+        'prefix' => 'register'
+    ], function () {
+
+        Route::post('/', [RegisterController::class, 'register']);
+        Route::patch('verify/{token}', [RegisterController::class, 'registerVerify'])
+            ->middleware(['auth']);
+        Route::get('resend-verification-link', [RegisterController::class, 'resendVerificationLink'])
+            ->middleware(['auth']);
+
+    });
 
 });
 
