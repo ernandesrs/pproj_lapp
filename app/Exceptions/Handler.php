@@ -32,7 +32,8 @@ class Handler extends ExceptionHandler
         InvalidDataException::class,
         InvalidRegisterVerificationTokenException::class,
         HasAlreadyBeenVerifiedException::class,
-        UnauthorizedActionException::class
+        UnauthorizedActionException::class,
+        UnauthenticatedException::class
     ];
 
     /**
