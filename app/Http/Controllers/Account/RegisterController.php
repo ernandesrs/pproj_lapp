@@ -24,4 +24,17 @@ class RegisterController extends Controller
             'user' => (new UserService)->register($request->validated())
         ]);
     }
+
+    /**
+     * Register verify
+     *
+     * @param string $token
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function registerVerify(string $token)
+    {
+        (new UserService)->registerVerify($token);
+
+        return $this->success();
+    }
 }

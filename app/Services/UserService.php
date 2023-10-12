@@ -27,4 +27,27 @@ class UserService
 
         return $user ?? null;
     }
+
+    /**
+     * Register verify
+     *
+     * @param string $token
+     * @return bool
+     */
+    public function registerVerify(string $token)
+    {
+        /**
+         * @var \App\Models\User $user
+         */
+        $user = \Auth::user();
+
+        if ($user->verification_token !== $token) {
+            throw new \App\Exceptions\Account\InvalidRegisterVerificationTokenException;
+        }
+
+        $user->verification_token = null;
+        $user->email_verified_at = \Illuminate\Support\Carbon::now();
+
+        return $user->save();
+    }
 }
