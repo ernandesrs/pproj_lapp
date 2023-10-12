@@ -21,6 +21,6 @@ class SendRegisterVerificationLinkListener
     public function handle(\App\Events\Account\UserRegisteredEvent $event): void
     {
         \Mail::to($event->user, $event->user->first_name . ' ' . $event->user->last_name)
-            ->send(new \App\Mail\Account\VerifyAccountMail($event->user));
+            ->queue(new \App\Mail\Account\VerifyAccountMail($event->user));
     }
 }
