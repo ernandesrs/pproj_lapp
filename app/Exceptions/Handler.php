@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Account\HasAlreadyBeenVerifiedException;
+use App\Exceptions\Account\InvalidRegisterVerificationTokenException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -26,7 +28,9 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         NotFoundException::class,
-        InvalidDataException::class
+        InvalidDataException::class,
+        InvalidRegisterVerificationTokenException::class,
+        HasAlreadyBeenVerifiedException::class
     ];
 
     /**
