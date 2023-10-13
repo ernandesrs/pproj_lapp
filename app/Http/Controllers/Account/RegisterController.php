@@ -33,7 +33,7 @@ class RegisterController extends Controller
      */
     public function registerVerify(string $token)
     {
-        (new UserService)->registerVerify($token);
+        (new UserService)->registerVerify(\Auth::user(), $token);
 
         return $this->success();
     }
@@ -45,7 +45,7 @@ class RegisterController extends Controller
      */
     public function resendVerificationLink()
     {
-        (new UserService)->resendVerificationLink();
+        (new UserService)->resendVerificationLink(\Auth::user());
 
         return $this->success();
     }

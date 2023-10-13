@@ -31,16 +31,12 @@ class UserService
     /**
      * Register verify
      *
+     * @param User|\Illuminate\Contracts\Auth\Authenticatable $user
      * @param string $token
      * @return bool
      */
-    public function registerVerify(string $token)
+    public function registerVerify(User|\Illuminate\Contracts\Auth\Authenticatable $user, string $token)
     {
-        /**
-         * @var \App\Models\User $user
-         */
-        $user = \Auth::user();
-
         if ($user->email_verified_at) {
             throw new \App\Exceptions\Account\HasAlreadyBeenVerifiedException;
         }
@@ -58,15 +54,11 @@ class UserService
     /**
      * Resend verification link
      *
+     * @param User|\Illuminate\Contracts\Auth\Authenticatable $user
      * @return bool
      */
-    public function resendVerificationLink()
+    public function resendVerificationLink(User|\Illuminate\Contracts\Auth\Authenticatable $user)
     {
-        /**
-         * @var \App\Models\User $user
-         */
-        $user = \Auth::user();
-
         // Account has been verified
         if ($user->email_verified_at) {
             throw new \App\Exceptions\Account\HasAlreadyBeenVerifiedException;
