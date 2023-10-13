@@ -34,4 +34,15 @@ class LoginController extends Controller
             'token' => 'Bearer ' . $token->plainTextToken
         ]);
     }
+
+    /**
+     * Logout
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        \Auth::user()->currentAccessToken()->delete();
+        return $this->success();
+    }
 }
