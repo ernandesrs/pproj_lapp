@@ -31,6 +31,8 @@ class ForgetController extends Controller
             'token' => \Illuminate\Support\Str::random(50)
         ]);
 
+        event(new \App\Events\Account\ForgetPasswordEvent($user, $reset));
+
         return $this->success();
     }
 

@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         \App\Events\Account\VerificationLinkResendEvent::class => [
             \App\Listeners\Account\SendRegisterVerificationLinkListener::class
+        ],
+        \App\Events\Account\ForgetPasswordEvent::class => [
+            \App\Listeners\Account\SendUpdatePasswordLinkListener::class
         ]
     ];
 

@@ -18,7 +18,9 @@ Route::get('/', function () {
 });
 
 Route::get('/mailable', function () {
-    $user = App\Models\User::find(1);
- 
-    return new App\Mail\Account\VerifyAccountMail($user);
+    $user = \App\Models\User::where('email', 'johnl@mail.com')->first();
+
+    $reset = \App\Models\Account\PasswordReset::where('email', $user->email)->first();
+
+    return new \App\Mail\Account\UpdatePasswordMail($user, $reset);
 });
