@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Account\AuthController;
+use App\Http\Controllers\Account\ForgetController;
 use App\Http\Controllers\Account\MeController;
 use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\LappController;
@@ -33,6 +34,15 @@ Route::group([
         Route::post('login', [AuthController::class, 'login']);
         Route::post('logout', [AuthController::class, 'logout'])
             ->middleware(['auth:sanctum']);
+
+    });
+
+    Route::group([
+        'prefix' => 'password'
+    ], function () {
+
+        Route::post('forget', [ForgetController::class, 'forget']);
+        Route::post('update/{token}', [ForgetController::class, 'update']);
 
     });
 
