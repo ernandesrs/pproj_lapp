@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Account\EmailOrPasswordInvalidException;
 use App\Exceptions\Account\HasAlreadyBeenVerifiedException;
 use App\Exceptions\Account\InvalidRegisterVerificationTokenException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -33,7 +34,8 @@ class Handler extends ExceptionHandler
         InvalidRegisterVerificationTokenException::class,
         HasAlreadyBeenVerifiedException::class,
         UnauthorizedActionException::class,
-        UnauthenticatedException::class
+        UnauthenticatedException::class,
+        EmailOrPasswordInvalidException::class
     ];
 
     /**
