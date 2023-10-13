@@ -86,6 +86,6 @@ class UserService
      */
     private function verificationToken()
     {
-        return base64_encode(\Illuminate\Support\Carbon::now()) . '|' . Str::random(20);
+        return Str::random(20) . '|' . base64_encode(\Illuminate\Support\Carbon::now());
     }
 }
