@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
 use App\Http\Requests\Account\ForgetRequest;
+use App\Http\Requests\Account\UpdatePasswordRequest;
 use Illuminate\Http\Request;
 
 class ForgetController extends Controller
@@ -36,8 +37,28 @@ class ForgetController extends Controller
         return $this->success();
     }
 
-    public function update()
+    /**
+     * Update password
+     *
+     * @param UpdatePasswordRequest $request
+     * @param string $token
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(UpdatePasswordRequest $request, string $token)
     {
+        $reset = \App\Models\Account\PasswordReset::where('token', $token)
+            ->first();
 
+        if (!$reset) {
+            throw new \App\Exceptions\Account\InvalidUpdatePasswordTokenException;
+        }
+
+        $user = \App\Models\User::where('email', $reset->email)->first();
+        $user->password = \Hash::make($request->get('password'));
+        $user->save();
+
+        $reset->delete();
+
+        return $this->success();
     }
 }
