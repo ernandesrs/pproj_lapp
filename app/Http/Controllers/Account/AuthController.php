@@ -9,7 +9,7 @@ use App\Http\Requests\Account\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     use TraitApiController;
 
