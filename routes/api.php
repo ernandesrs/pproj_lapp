@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Account\LoginController;
 use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\LappController;
 
@@ -17,9 +18,19 @@ Route::group([
 
         Route::post('/', [RegisterController::class, 'register']);
         Route::patch('verify/{token}', [RegisterController::class, 'registerVerify'])
-            ->middleware(['auth']);
+            ->middleware(['auth:sanctum']);
         Route::get('resend-verification-link', [RegisterController::class, 'resendVerificationLink'])
-            ->middleware(['auth']);
+            ->middleware(['auth:sanctum']);
+
+    });
+
+    Route::group([
+        'prefix' => 'auth'
+    ], function () {
+
+        Route::post('login', [LoginController::class, 'login']);
+        Route::post('logout', [LoginController::class, 'logout'])
+            ->middleware(['auth:sanctum']);
 
     });
 
