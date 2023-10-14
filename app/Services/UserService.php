@@ -80,6 +80,24 @@ class UserService
     }
 
     /**
+     * Update user
+     *
+     * @param User|\Illuminate\Contracts\Auth\Authenticatable $user
+     * @param array $validated
+     * @return User|\Illuminate\Contracts\Auth\Authenticatable $user
+     */
+    public function update(User|\Illuminate\Contracts\Auth\Authenticatable $user, array $validated)
+    {
+        if ($validated['password'] ?? null) {
+            $validated['password'] = \Hash::make($validated['password']);
+        }
+
+        $user->update($validated);
+
+        return $user;
+    }
+
+    /**
      * Generate a verification token
      *
      * @return string

@@ -52,6 +52,7 @@ Route::group([
     ], function () {
 
         Route::get('/', [MeController::class, 'me']);
+        Route::post('update', [MeController::class, 'update']);
 
     });
 
