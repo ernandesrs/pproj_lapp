@@ -4,6 +4,7 @@ use App\Http\Controllers\Account\AuthController;
 use App\Http\Controllers\Account\ForgetController;
 use App\Http\Controllers\Account\MeController;
 use App\Http\Controllers\Account\RegisterController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\LappController;
 
 use Illuminate\Http\Request;
@@ -11,6 +12,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LappController::class, 'index']);
 
+/**
+ * 
+ * Account
+ * 
+ */
 Route::group([
     'prefix' => 'account'
 ], function () {
@@ -58,5 +64,19 @@ Route::group([
         Route::delete('photo', [MeController::class, 'photoDelete']);
 
     });
+
+});
+
+/**
+ * 
+ * Admin
+ * 
+ */
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => ['auth:sanctum']
+], function () {
+
+    Route::get('/', [AdminController::class, 'index']);
 
 });
