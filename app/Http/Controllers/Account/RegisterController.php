@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\TraitApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Account\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {
         return $this->success([
-            'user' => (new UserService)->register($request->validated())
+            'user' => new UserResource((new UserService)->register($request->validated()))
         ]);
     }
 

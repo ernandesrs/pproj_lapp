@@ -7,6 +7,7 @@ use App\Http\Controllers\TraitApiController;
 use App\Http\Requests\Account\PhotoRequest;
 use App\Http\Requests\Account\UpdatePasswordRequest;
 use App\Http\Requests\Account\UserUpdateRequest;
+use App\Http\Resources\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class MeController extends Controller
     public function me()
     {
         return $this->success([
-            'me' => \Auth::user()
+            'user' => new UserResource(\Auth::user())
         ]);
     }
 
@@ -35,7 +36,7 @@ class MeController extends Controller
     public function update(UserUpdateRequest $request)
     {
         return $this->success([
-            'me' => (new UserService)->update(\Auth::user(), $request->validated())
+            'user' => new UserResource((new UserService)->update(\Auth::user(), $request->validated()))
         ]);
     }
 
