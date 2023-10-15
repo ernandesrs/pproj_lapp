@@ -65,8 +65,15 @@ class MeController extends Controller
         ]);
     }
 
+    /**
+     * Photo delete
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function photoDelete()
     {
+        (new UserService)->photoDelete(\Auth::user());
+
         return $this->success();
     }
 }

@@ -126,6 +126,17 @@ class UserService
     }
 
     /**
+     * Photo delete
+     *
+     * @param User|\Illuminate\Contracts\Auth\Authenticatable $user
+     * @return User
+     */
+    public function photoDelete(User|\Illuminate\Contracts\Auth\Authenticatable $user)
+    {
+        return $this->deletePhoto($user);
+    }
+
+    /**
      * User photo delete
      *
      * @param User $user
