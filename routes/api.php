@@ -5,6 +5,7 @@ use App\Http\Controllers\Account\ForgetController;
 use App\Http\Controllers\Account\MeController;
 use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LappController;
 
 use Illuminate\Http\Request;
@@ -78,5 +79,7 @@ Route::group([
 ], function () {
 
     Route::get('/', [AdminController::class, 'index']);
+
+    Route::apiResource('users', UserController::class);
 
 });

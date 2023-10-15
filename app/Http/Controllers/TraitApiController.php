@@ -37,4 +37,16 @@ trait TraitApiController
             'success' => $status
         ], $data));
     }
+
+    /**
+     * Collection
+     *
+     * @param string $resourceClass
+     * @param mixed $modelInstance
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    private function collection(string $resourceClass, mixed $modelInstance)
+    {
+        return $resourceClass::collection($modelInstance->withQueryString())->response()->getData();
+    }
 }
