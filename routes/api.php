@@ -54,6 +54,8 @@ Route::group([
         Route::get('/', [MeController::class, 'me']);
         Route::post('update', [MeController::class, 'update']);
         Route::post('update-password', [MeController::class, 'updatePassword']);
+        Route::post('photo', [MeController::class, 'photoUpload']);
+        Route::delete('photo', [MeController::class, 'photoDelete']);
 
     });
 

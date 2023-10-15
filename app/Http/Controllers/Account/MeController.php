@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
+use App\Http\Requests\Account\PhotoRequest;
 use App\Http\Requests\Account\UpdatePasswordRequest;
 use App\Http\Requests\Account\UserUpdateRequest;
 use App\Services\UserService;
@@ -48,6 +49,24 @@ class MeController extends Controller
     {
         (new UserService)->update(\Auth::user(), $request->validated());
 
+        return $this->success();
+    }
+
+    /**
+     * Photo upload
+     *
+     * @param PhotoRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function photoUpload(PhotoRequest $request)
+    {
+        return $this->success([
+            'photo' => \Storage::url((new UserService)->photoUpload(\Auth::user(), $request->validated())->photo)
+        ]);
+    }
+
+    public function photoDelete()
+    {
         return $this->success();
     }
 }

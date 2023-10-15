@@ -8,6 +8,11 @@ use App\Models\User;
 class UserService
 {
     /**
+     * Users photo directory
+     */
+    private $photosDir = 'users/photos';
+
+    /**
      * Register
      *
      * @param array $validated
@@ -93,6 +98,54 @@ class UserService
         }
 
         $user->update($validated);
+
+        return $user;
+    }
+
+    /**
+     * Photo upload
+     *
+     * @param User|\Illuminate\Contracts\Auth\Authenticatable $user
+     * @param array $validated
+     * @return User
+     */
+    public function photoUpload(User|\Illuminate\Contracts\Auth\Authenticatable $user, array $validated)
+    {
+        /**
+         * @var \Illuminate\Http\UploadedFile
+         */
+        $photo = $validated['photo'];
+
+        $user = $this->deletePhoto($user, false);
+        if ($path = $photo->store($this->photosDir, 'public')) {
+            $user->photo = $path;
+            $user->save();
+        }
+
+        return $user;
+    }
+
+    /**
+     * User photo delete
+     *
+     * @param User $user
+     * @param bool $deleteAndSave
+     * @return User
+     */
+    private function deletePhoto(User $user, bool $deleteAndSave = true)
+    {
+        if (is_null($user->photo)) {
+            return $user;
+        }
+
+        if (\Storage::disk('public')->exists($user->photo)) {
+            \Storage::disk('public')->delete($user->photo);
+        }
+
+        $user->photo = null;
+        if ($deleteAndSave) {
+            $user->save();
+        }
 
         return $user;
     }
