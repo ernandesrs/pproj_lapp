@@ -72,10 +72,15 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Destroy
+     *
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        (new UserService)->delete($user);
+
+        return $this->success();
     }
 }
