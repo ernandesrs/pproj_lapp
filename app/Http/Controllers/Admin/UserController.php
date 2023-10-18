@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
+use App\Http\Requests\Account\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -28,11 +30,17 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store
+     *
+     * @param RegisterRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        //
+        $user = (new UserService)->register($request->validated());
+        return $this->success([
+            'user' => $this->resource(UserResource::class, $user)
+        ]);
     }
 
     /**
