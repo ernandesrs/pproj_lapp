@@ -39,13 +39,25 @@ trait TraitApiController
     }
 
     /**
-     * Collection
+     * Resource
+     *
+     * @param string $resourceClass
+     * @param mixed $modelInstance
+     * @return \Illuminate\Http\Resources\Json\ResourceResponse
+     */
+    private function resource(string $resourceClass, mixed $modelInstance)
+    {
+        return new $resourceClass($modelInstance);
+    }
+
+    /**
+     * Resource collection
      *
      * @param string $resourceClass
      * @param mixed $modelInstance
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    private function collection(string $resourceClass, mixed $modelInstance)
+    private function resourceCollection(string $resourceClass, mixed $modelInstance)
     {
         return $resourceClass::collection($modelInstance->withQueryString())->response()->getData();
     }

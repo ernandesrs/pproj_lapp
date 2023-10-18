@@ -23,7 +23,7 @@ class UserController extends Controller
         $users = (new \App\Filters\UserFilter($request))->filter();
 
         return $this->success([
-            'users' => $this->collection(UserResource::class, $users)
+            'users' => $this->resourceCollection(UserResource::class, $users)
         ]);
     }
 
@@ -36,11 +36,16 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show
+     *
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        return $this->success([
+            'user' => $this->resource(UserResource::class, $user)
+        ]);
     }
 
     /**
