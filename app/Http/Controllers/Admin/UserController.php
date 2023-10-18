@@ -83,4 +83,19 @@ class UserController extends Controller
 
         return $this->success();
     }
+
+    /**
+     * Photo delete
+     *
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function photoDelete(User $user)
+    {
+        if (is_null($user->photo))
+            return $this->fail();
+
+        (new UserService)->photoDelete($user);
+        return $this->success();
+    }
 }

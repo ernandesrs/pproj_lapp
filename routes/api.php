@@ -81,5 +81,6 @@ Route::group([
     Route::get('/', [AdminController::class, 'index']);
 
     Route::apiResource('users', UserController::class);
+    Route::delete('users/{user}/photo', [UserController::class, 'photoDelete']);
 
 });
