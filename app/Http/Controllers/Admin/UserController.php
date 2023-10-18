@@ -13,12 +13,17 @@ class UserController extends Controller
     use TraitApiController;
 
     /**
-     * Display a listing of the resource.
+     * Users list
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
+        $users = (new \App\Filters\UserFilter($request))->filter();
+
         return $this->success([
-            'users' => $this->collection(UserResource::class, User::paginate(2))
+            'users' => $this->collection(UserResource::class, $users)
         ]);
     }
 
