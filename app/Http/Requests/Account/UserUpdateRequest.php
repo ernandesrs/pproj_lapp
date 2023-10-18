@@ -27,7 +27,7 @@ class UserUpdateRequest extends FormRequest
         return [
             'first_name' => ['required', 'max:25'],
             'last_name' => ['required', 'max:50'],
-            'username' => ['required', 'max:25', 'unique:users,username,' . \Auth::user()->id],
+            'username' => ['required', 'max:25', 'unique:users,username,' . $this->user?->id ?? \Auth::user()->id],
         ];
     }
 }

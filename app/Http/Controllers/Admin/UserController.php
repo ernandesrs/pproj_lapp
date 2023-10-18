@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
 use App\Http\Requests\Account\RegisterRequest;
+use App\Http\Requests\Account\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
@@ -57,11 +58,17 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update
+     *
+     * @param UserUpdateRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, string $id)
+    public function update(UserUpdateRequest $request, User $user)
     {
-        //
+        return $this->success([
+            'user' => (new UserService)->update($user, $request->validated())
+        ]);
     }
 
     /**
