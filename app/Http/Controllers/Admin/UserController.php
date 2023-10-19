@@ -7,6 +7,7 @@ use App\Http\Controllers\TraitApiController;
 use App\Http\Requests\Account\RegisterRequest;
 use App\Http\Requests\Account\UserUpdateRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -96,6 +97,38 @@ class UserController extends Controller
             return $this->fail();
 
         (new UserService)->photoDelete($user);
+        return $this->success();
+    }
+
+    /**
+     * Add role to user
+     *
+     * @param User $user
+     * @param Role $role
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addRole(User $user, Role $role)
+    {
+        if ($user->roles()->where('id', $role->id)->count() == 0) {
+            $user->roles()->attach($role->id);
+        }
+
+        return $this->success();
+    }
+
+    /**
+     * Remove role from user
+     *
+     * @param User $user
+     * @param Role $role
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeRole(User $user, Role $role)
+    {
+        if ($user->roles()->where('id', $role->id)->count()) {
+            $user->roles()->detach($role->id);
+        }
+
         return $this->success();
     }
 }

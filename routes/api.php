@@ -82,5 +82,7 @@ Route::group([
 
     Route::apiResource('users', UserController::class);
     Route::delete('users/{user}/photo', [UserController::class, 'photoDelete']);
+    Route::patch('users/{user}/role/{role}', [UserController::class, 'addRole']);
+    Route::delete('users/{user}/role/{role}', [UserController::class, 'removeRole']);
 
 });
