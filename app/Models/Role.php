@@ -15,10 +15,10 @@ class Role extends Model
      * @var array
      */
     public const defaultManageablesActions = [
-        'list' => false,
-        'show' => false,
+        'viewAny' => false,
+        'view' => false,
         'create' => false,
-        'edit' => false,
+        'update' => false,
         'delete' => false
     ];
 
