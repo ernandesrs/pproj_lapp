@@ -14,20 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $ua = \App\Models\User::where('id', 1)->first();
-    $ub = \App\Models\User::where('id', 2)->first();
-    $uc = \App\Models\User::where('id', 3)->first();
-
-    // $ua->roles()->attach([1]);
-    // $ub->roles()->attach([2]);
-    // $uc->roles()->attach([3]);
-
-    var_dump(
-        $ua->roles()->first()->users()->get(),
-        $ub->roles()->first()->users()->get(),
-        $uc->roles()->first()->users()->get(),
-    );
-    die;
     return view('welcome');
 });
 

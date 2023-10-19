@@ -82,6 +82,18 @@ class Role extends Model
     }
 
     /**
+     * Booted
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::retrieved(function (Role $role) {
+            $role->manageables = json_decode($role->manageables);
+        });
+    }
+
+    /**
      * Get manageables
      *
      * @return array
