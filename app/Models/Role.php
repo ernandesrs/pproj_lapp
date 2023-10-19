@@ -72,6 +72,16 @@ class Role extends Model
     }
 
     /**
+     * Users
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    /**
      * Get manageables
      *
      * @return array
