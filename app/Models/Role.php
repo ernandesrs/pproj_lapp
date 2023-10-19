@@ -82,6 +82,23 @@ class Role extends Model
     }
 
     /**
+     * Check permission
+     *
+     * @param string $action
+     * @param string $manageableClass
+     * @return bool
+     */
+    public function hasPermission(string $action, string $manageableClass)
+    {
+        if ($this->is_super) {
+            return true;
+        }
+
+        $manageable = ((array) $this->manageables)[self::classNameToManageableName($manageableClass)] ?? null;
+        return $manageable ? ((array) $manageable)[$action] ?? false : false;
+    }
+
+    /**
      * Booted
      *
      * @return void
@@ -103,9 +120,20 @@ class Role extends Model
         $manageables = [];
 
         foreach (self::manageables as $manageable => $manageableActions) {
-            $manageables[str_replace('\\', '_', $manageable)] = $manageableActions;
+            $manageables[self::classNameToManageableName($manageable)] = $manageableActions;
         }
 
         return $manageables;
+    }
+
+    /**
+     * Class name to manageable name
+     *
+     * @param string $className
+     * @return string
+     */
+    private static function classNameToManageableName(string $className)
+    {
+        return str_replace('\\', '_', $className);
     }
 }

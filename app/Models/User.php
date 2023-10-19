@@ -56,4 +56,24 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    /**
+     * Check user permission
+     *
+     * @param string $action
+     * @param string $manageableClass
+     * @return bool
+     */
+    public function permission(string $action, string $manageableClass)
+    {
+        if ($this->roles()->count() === 0) {
+            return false;
+        }
+
+        $role = $this->roles()->get()->first(function ($role) use ($action, $manageableClass) {
+            return $role->hasPermission($action, $manageableClass);
+        });
+
+        return $role ? true : false;
+    }
 }

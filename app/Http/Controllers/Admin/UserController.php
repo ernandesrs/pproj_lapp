@@ -24,6 +24,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('viewAny', User::class);
+
         $users = (new \App\Filters\UserFilter($request))->filter();
 
         return $this->success([
