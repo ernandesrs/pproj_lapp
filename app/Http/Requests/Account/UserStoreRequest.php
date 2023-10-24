@@ -5,7 +5,7 @@ namespace App\Http\Requests\Account;
 use App\Http\Requests\TraitApiRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class UserStoreRequest extends FormRequest
 {
     use TraitApiRequest;
 

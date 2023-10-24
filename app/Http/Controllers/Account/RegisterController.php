@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\TraitApiController;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Account\RegisterRequest;
+use App\Http\Requests\Account\UserStoreRequest;
 use App\Http\Resources\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -16,10 +16,10 @@ class RegisterController extends Controller
     /**
      * Register account
      *
-     * @param RegisterRequest $request
+     * @param UserStoreRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(RegisterRequest $request)
+    public function register(UserStoreRequest $request)
     {
         return $this->success([
             'user' => new UserResource((new UserService)->register($request->validated()))

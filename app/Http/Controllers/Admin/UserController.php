@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
-use App\Http\Requests\Account\RegisterRequest;
+use App\Http\Requests\Account\UserStoreRequest;
 use App\Http\Requests\Account\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Role;
@@ -36,10 +36,10 @@ class UserController extends Controller
     /**
      * Store
      *
-     * @param RegisterRequest $request
+     * @param UserStoreRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(RegisterRequest $request)
+    public function store(UserStoreRequest $request)
     {
         $this->authorize('create', User::class);
 
