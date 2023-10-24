@@ -76,4 +76,30 @@ class User extends Authenticatable
 
         return $role ? true : false;
     }
+
+    /**
+     * Is admin
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->roles()->count() !== 0;
+    }
+
+    /**
+     * Is super user
+     *
+     * @return bool
+     */
+    public function isSuperUser()
+    {
+        if (!$this->isAdmin()) {
+            return false;
+        }
+
+        return $this->roles()->get()->first(function ($role) {
+            return $role->isSuperRole();
+        }) ? true : false;
+    }
 }

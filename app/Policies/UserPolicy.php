@@ -20,7 +20,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        //
+        return $user->permission("view", $model::class);
     }
 
     /**
@@ -28,7 +28,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->permission("create", User::class);
     }
 
     /**
@@ -36,7 +36,22 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        //
+        // super user edit all
+        if ($user->isSuperUser()) {
+            return true;
+        }
+
+        // is admin, and admin not edit super user
+        if ($model->isSuperUser()) {
+            return false;
+        }
+
+        // is admin, and admin edit admin if has permission
+        if ($model->isAdmin()) {
+            return $user->permission('edit_admins', $model::class);
+        }
+
+        return $user->permission('update', $model::class);
     }
 
     /**
@@ -44,22 +59,29 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        //
+        // super user edit all
+        if ($user->isSuperUser()) {
+            return true;
+        }
+
+        // is admin, and admin not edit super user
+        if ($model->isSuperUser()) {
+            return false;
+        }
+
+        // is admin, and admin edit admin if has permission
+        if ($model->isAdmin()) {
+            return $user->permission('delete_admins', $model::class);
+        }
+
+        return $user->permission('delete', $model::class);
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the user can update role the model.
      */
-    public function restore(User $user, User $model): bool
+    public function updateRole(User $user): bool
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, User $model): bool
-    {
-        //
+        return $user->isSuperUser();
     }
 }

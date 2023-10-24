@@ -41,7 +41,10 @@ class UserController extends Controller
      */
     public function store(RegisterRequest $request)
     {
+        $this->authorize('create', User::class);
+
         $user = (new UserService)->register($request->validated());
+
         return $this->success([
             'user' => $this->resource(UserResource::class, $user)
         ]);
@@ -55,6 +58,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $this->authorize('view', $user);
+
         return $this->success([
             'user' => $this->resource(UserResource::class, $user)
         ]);
@@ -69,6 +74,8 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
+        $this->authorize('update', $user);
+
         return $this->success([
             'user' => (new UserService)->update($user, $request->validated())
         ]);
@@ -82,6 +89,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
+
         (new UserService)->delete($user);
 
         return $this->success();
@@ -95,6 +104,8 @@ class UserController extends Controller
      */
     public function photoDelete(User $user)
     {
+        $this->authorize('update', $user);
+
         if (is_null($user->photo))
             return $this->fail();
 
@@ -111,6 +122,8 @@ class UserController extends Controller
      */
     public function addRole(User $user, Role $role)
     {
+        $this->authorize('updateRole', $user);
+
         if ($user->roles()->where('id', $role->id)->count() == 0) {
             $user->roles()->attach($role->id);
         }
@@ -127,6 +140,8 @@ class UserController extends Controller
      */
     public function removeRole(User $user, Role $role)
     {
+        $this->authorize('updateRole', $user);
+
         if ($user->roles()->where('id', $role->id)->count()) {
             $user->roles()->detach($role->id);
         }

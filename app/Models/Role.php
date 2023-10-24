@@ -99,6 +99,16 @@ class Role extends Model
     }
 
     /**
+     * Is super user role
+     *
+     * @return bool
+     */
+    public function isSuperRole()
+    {
+        return $this->is_super;
+    }
+
+    /**
      * Booted
      *
      * @return void
