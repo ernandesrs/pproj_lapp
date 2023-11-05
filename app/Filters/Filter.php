@@ -26,11 +26,11 @@ class Filter
             'rules' => ['nullable', 'string']
         ],
         'order' => [
-            'order|created_at' => [
+            'order:created_at' => [
                 'value' => 'desc',
                 'rules' => ['nullable', 'in:asc,desc']
             ],
-            'order|updated_at' => [
+            'order:updated_at' => [
                 'value' => null,
                 'rules' => ['nullable', 'in:asc,desc']
             ]
@@ -90,7 +90,7 @@ class Filter
      */
     protected function addSortable(string $field)
     {
-        $this->defaults['order'][str_starts_with($field, 'order|') ? $field : 'order|' . $field] = [
+        $this->defaults['order'][str_starts_with($field, 'order:') ? $field : 'order:' . $field] = [
             'value' => null,
             'rules' => ['nullable', 'in:asc,desc']
         ];
@@ -114,7 +114,7 @@ class Filter
 
         foreach ($this->defaults['order'] as $orderKey => $orderValue) {
             if (!is_null($orderValue)) {
-                $key = str_replace('order|', '', $orderKey);
+                $key = str_replace('order:', '', $orderKey);
                 $this->model = $this->model->orderBy($key, $orderValue);
             }
         }
@@ -158,8 +158,8 @@ class Filter
         }
 
         foreach ($validator->validated() as $k => $v) {
-            if (str_contains($k, '|')) {
-                [$group,] = explode('|', $k);
+            if (str_contains($k, ':')) {
+                [$group,] = explode(':', $k);
                 $this->defaults[$group][$k]['value'] = $v;
             } else {
                 $this->defaults[$k]['value'] = $v;
@@ -179,7 +179,7 @@ class Filter
                 $this->defaults[$key] = $value['value'];
             } else {
                 foreach ($value as $subKey => $subValue) {
-                    [$group,] = explode('|', $subKey);
+                    [$group,] = explode(':', $subKey);
 
                     $this->defaults[$group][$subKey] = $subValue['value'];
                 }

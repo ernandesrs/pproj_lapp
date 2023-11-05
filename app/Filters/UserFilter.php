@@ -17,7 +17,7 @@ class UserFilter extends Filter
         parent::__construct(User::class, $request);
 
         $this->addSearchable('first_name,last_name,username,email')
-            ->addSortable('order|first_name')
+            ->addSortable('order:first_name')
             ->addSortable('last_name')
             ->addSortable('username');
     }
