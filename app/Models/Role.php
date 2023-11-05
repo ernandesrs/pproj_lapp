@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 class Role extends Model
 {
@@ -69,7 +68,28 @@ class Role extends Model
         $role = new Role($attributes);
         $role->save();
 
+        $role->manageables = json_decode($role->manageables);
+
         return $role;
+    }
+
+    /**
+     * Update role
+     *
+     * @param array $attributes
+     * @param array $options
+     * @return Role
+     */
+    public function update($attributes = [], $options = [])
+    {
+        $attributes = [
+            ...$attributes,
+            'manageables' => self::addExistingUncontainedManageables($attributes['manageables']),
+        ];
+
+        parent::update($attributes, $options);
+
+        return $this;
     }
 
     /**
@@ -117,16 +137,27 @@ class Role extends Model
     protected static function booted()
     {
         static::retrieved(function (Role $role) {
-            $manageables = (array) json_decode($role->manageables);
-
-            foreach (self::getManageables() as $key => $manageable) {
-                if (!key_exists($key, $manageables)) {
-                    $manageables[$key] = $manageable;
-                }
-            }
-
-            $role->manageables = $manageables;
+            $role->manageables = self::addExistingUncontainedManageables((array) json_decode($role->manageables));
         });
+    }
+
+    /**
+     * 
+     * Checks whether one or more manageables defined in the 'manageables' constant are contained in '$manageables' or not.
+     * It will be added if not contained.
+     *
+     * @param array $manageables
+     * @return array
+     */
+    protected static function addExistingUncontainedManageables(array $manageables)
+    {
+        foreach (self::getManageables() as $key => $manageable) {
+            if (!key_exists($key, $manageables)) {
+                $manageables[$key] = $manageable;
+            }
+        }
+
+        return $manageables;
     }
 
     /**
@@ -134,7 +165,7 @@ class Role extends Model
      *
      * @return array
      */
-    private static function getManageables()
+    public static function getManageables()
     {
         $manageables = [];
 
