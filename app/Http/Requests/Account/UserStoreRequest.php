@@ -10,6 +10,21 @@ class UserStoreRequest extends FormRequest
     use TraitApiRequest;
 
     /**
+     * 
+     * This rules can be used in this class request and in UserUpdateRequest class
+     * 
+     * the 'unique' rule must always be the last in the array
+     * 
+     */
+    static $fieldsAndRules = [
+        'first_name' => ['required', 'max:25'],
+        'last_name' => ['required', 'max:50'],
+        'username' => ['required', 'max:25', 'unique:users,username'],
+        'email' => ['required', 'unique:users,email'],
+        'password' => ['required', 'min:6', 'max:12', 'confirmed']
+    ];
+
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
@@ -24,12 +39,6 @@ class UserStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'first_name' => ['required', 'max:25'],
-            'last_name' => ['required', 'max:50'],
-            'username' => ['required', 'max:25', 'unique:users,username'],
-            'email' => ['required', 'unique:users,email'],
-            'password' => ['required', 'min:6', 'max:12', 'confirmed']
-        ];
+        return self::$fieldsAndRules;
     }
 }

@@ -24,10 +24,32 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'first_name' => ['required', 'max:25'],
-            'last_name' => ['required', 'max:50'],
-            'username' => ['required', 'max:25', 'unique:users,username,' . $this->user?->id ?? \Auth::user()->id],
-        ];
+        /**
+         * 
+         * keys in UserStoreRequest::$fieldsAndRules array to ignore.
+         * 
+         */
+        $exceptsKeys = ['password', 'email'];
+
+        $rules = [];
+
+        foreach (UserStoreRequest::$fieldsAndRules as $key => $fAr) {
+            if (!in_array($key, $exceptsKeys)) {
+                $rules[$key] = $fAr;
+
+                // find a field with a 'unique' rule
+                $finded = array_filter($fAr, function ($i) {
+                    return str_starts_with($i, 'unique:');
+                });
+
+                // update 'unique' rule
+                if (current($finded)) {
+                    $changed = $finded[array_key_last($finded)] . ',' . $this->user?->id ?? \Auth::user()->id;
+                    $rules[$key][array_key_last($finded)] = $changed;
+                }
+            }
+        }
+
+        return $rules;
     }
 }
