@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Role extends Model
 {
@@ -116,7 +117,15 @@ class Role extends Model
     protected static function booted()
     {
         static::retrieved(function (Role $role) {
-            $role->manageables = json_decode($role->manageables);
+            $manageables = (array) json_decode($role->manageables);
+
+            foreach (self::getManageables() as $key => $manageable) {
+                if (!key_exists($key, $manageables)) {
+                    $manageables[$key] = $manageable;
+                }
+            }
+
+            $role->manageables = $manageables;
         });
     }
 
