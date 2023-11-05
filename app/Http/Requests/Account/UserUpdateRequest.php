@@ -26,14 +26,14 @@ class UserUpdateRequest extends FormRequest
     {
         /**
          * 
-         * keys in UserStoreRequest::$fieldsAndRules array to ignore.
+         * keys in config('lapp.user.fields_and_rules') array to ignore.
          * 
          */
         $exceptsKeys = ['password', 'email'];
 
         $rules = [];
 
-        foreach (UserStoreRequest::$fieldsAndRules as $key => $fAr) {
+        foreach (config('lapp.user.fields_and_rules') as $key => $fAr) {
             if (!in_array($key, $exceptsKeys)) {
                 $rules[$key] = $fAr;
 
