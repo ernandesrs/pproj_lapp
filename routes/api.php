@@ -5,6 +5,7 @@ use App\Http\Controllers\Account\ForgetController;
 use App\Http\Controllers\Account\MeController;
 use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LappController;
 
@@ -80,9 +81,21 @@ Route::group([
 
     Route::get('/', [AdminController::class, 'index']);
 
+    /**
+     * 
+     * Users
+     * 
+     */
     Route::apiResource('users', UserController::class);
     Route::delete('users/{user}/photo', [UserController::class, 'photoDelete']);
     Route::patch('users/{user}/role/{role}', [UserController::class, 'addRole']);
     Route::delete('users/{user}/role/{role}', [UserController::class, 'removeRole']);
+
+    /**
+     * 
+     * Roles
+     * 
+     */
+    Route::apiResource('roles', RoleController::class);
 
 });
