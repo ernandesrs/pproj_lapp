@@ -14,6 +14,9 @@ return new class extends Migration {
             $table->id();
 
             $table->string('name', 25);
+
+            $table->fullText(['name']);
+
             $table->boolean('is_super')->default(false)->comment('Authorize all actions');
             $table->boolean('protected')->default(false)->comment('Define if this is a protected role');
             $table->json('manageables');
