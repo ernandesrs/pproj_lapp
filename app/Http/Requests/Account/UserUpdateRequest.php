@@ -44,7 +44,7 @@ class UserUpdateRequest extends FormRequest
 
                 // update 'unique' rule
                 if (current($finded)) {
-                    $changed = $finded[array_key_last($finded)] . ',' . $this->user?->id ?? \Auth::user()->id;
+                    $changed = $finded[array_key_last($finded)] . ',' . ($this->user?->id ?? \Auth::user()->id);
                     $rules[$key][array_key_last($finded)] = $changed;
                 }
             }
