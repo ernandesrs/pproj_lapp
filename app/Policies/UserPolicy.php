@@ -59,6 +59,10 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
+        if ($user->id == $model->id) {
+            return false;
+        }
+
         // super user edit all
         if ($user->isSuperUser()) {
             return true;

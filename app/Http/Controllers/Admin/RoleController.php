@@ -89,9 +89,7 @@ class RoleController extends Controller
         $this->authorize('delete', $role);
 
         if ($count = $role->users()->count()) {
-            return $this->fail([
-                'message' => "Can't delete, " . $count . " users are linked to this role."
-            ]);
+            throw new \App\Exceptions\Admin\HasDependentsException("Can't delete, " . $count . " users are linked to this role.");
         }
 
         $role->delete();
