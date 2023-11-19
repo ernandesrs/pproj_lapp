@@ -14,11 +14,16 @@ class UserFilter extends Filter
      */
     public function __construct(?Request $request)
     {
-        parent::__construct(User::class, $request);
-
         $this->addSearchable('first_name,last_name,username,email')
             ->addSortable('order:first_name')
             ->addSortable('last_name')
-            ->addSortable('username');
+            ->addSortable('username')
+
+            ->addComparableFields('email', true)
+            ->addComparableFields('email', false)
+            ->addComparableFields('username', true)
+            ->addComparableFields('username', false);
+
+        parent::__construct(User::class, $request);
     }
 }

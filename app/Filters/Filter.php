@@ -61,13 +61,14 @@ class Filter
     /**
      * Constructor
      *
-     * @param string $modelClass
+     * @param Model|string $modelClass
      * @param Request|null $request
      */
-    public function __construct(string $modelClass, ?Request $request)
+    public function __construct(Model|string $modelClass, ?Request $request)
     {
-        $this->model = new $modelClass;
+        $this->model = is_string($modelClass) ? new $modelClass : $modelClass;
         $this->request = $request;
+        $this->validate();
     }
 
     /**
@@ -98,20 +99,53 @@ class Filter
     }
 
     /**
+     * Add comparables fields
+     *
+     * @param string $field
+     * @param boolean $equals comparation is equals or not equals
+     * @return Filter
+     */
+    protected function addComparableFields(string $field, bool $equals = true)
+    {
+        $this->defaults[$equals ? 'equals' : 'notequals'][str_starts_with($field, ($equals ? 'equals:' : 'notequals:')) ? $field : ($equals ? 'equals:' : 'notequals:') . $field] = [
+            'value' => null,
+            'comparator' => $equals ? '=' : '!=',
+            'rules' => ['nullable', 'string']
+        ];
+        return $this;
+    }
+
+    /**
      * Filter
      *
      * @return mixed
      */
     public function filter()
     {
-        $this->validate();
-
         $this->prepare();
 
+        // equals
+        foreach ($this->defaults['equals'] ?? [] as $comparableKey => $comparableValue) {
+            if (!is_null($comparableValue)) {
+                $key = str_replace('equals:', '', $comparableKey);
+                $this->model = $this->model->where($key, '=', $comparableValue);
+            }
+        }
+
+        // not equals
+        foreach ($this->defaults['notequals'] ?? [] as $comparableKey => $comparableValue) {
+            if (!is_null($comparableValue)) {
+                $key = str_replace('notequals:', '', $comparableKey);
+                $this->model = $this->model->where($key, '!=', $comparableValue);
+            }
+        }
+
+        // search
         if ($search = $this->defaults['search']) {
             $this->model = $this->model->whereRaw("MATCH({$this->searchable}) AGAINST('{{$search}}')");
         }
 
+        // order
         foreach ($this->defaults['order'] as $orderKey => $orderValue) {
             if (!is_null($orderValue)) {
                 $key = str_replace('order:', '', $orderKey);
