@@ -14,11 +14,14 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $extras = [
+            'photo_url' => $this->resource->photo ? \Storage::url($this->resource->photo) : null,
+            'roles' => \App\Http\Resources\RoleResource::collection($this->resource->roles()->get())
+        ];
+
         return array_merge(
             parent::toArray($request),
-            [
-                'photo_url' => $this->resource->photo ? \Storage::url($this->resource->photo) : null
-            ]
+            $extras
         );
     }
 }
