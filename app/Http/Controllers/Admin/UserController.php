@@ -40,6 +40,8 @@ class UserController extends Controller
      */
     public function admins()
     {
+        $this->authorize('viewAny', User::class);
+
         $users = User::whereHas('roles')->get();
 
         return $this->success([
