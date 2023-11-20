@@ -84,9 +84,9 @@ class UserPolicy
     /**
      * Determine whether the user can update role the model.
      */
-    public function updateRole(User $user): bool
+    public function updateRole(User $user, User $model): bool
     {
-        if (\Auth::user()->id == $user->id) {
+        if ($user->id == $model->id) {
             return false;
         }
 
