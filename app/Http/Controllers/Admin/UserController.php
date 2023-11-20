@@ -34,6 +34,20 @@ class UserController extends Controller
     }
 
     /**
+     * Admins list
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function admins()
+    {
+        $users = User::whereHas('roles')->get();
+
+        return $this->success([
+            'users' => $this->resourceCollection(UserResource::class, $users)
+        ]);
+    }
+
+    /**
      * Store
      *
      * @param UserStoreRequest $request

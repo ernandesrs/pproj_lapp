@@ -59,6 +59,10 @@ trait TraitApiController
      */
     private function resourceCollection(string $resourceClass, mixed $modelInstance)
     {
-        return $resourceClass::collection($modelInstance->withQueryString())->response()->getData();
+        try {
+            return $resourceClass::collection($modelInstance->withQueryString())->response()->getData();
+        } catch (\Exception $e) {
+            return $resourceClass::collection($modelInstance)->response()->getData();
+        }
     }
 }
