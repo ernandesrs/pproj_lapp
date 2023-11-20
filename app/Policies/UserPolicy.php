@@ -86,6 +86,10 @@ class UserPolicy
      */
     public function updateRole(User $user): bool
     {
+        if (\Auth::user()->id == $user->id) {
+            return false;
+        }
+
         return $user->isSuperUser();
     }
 }

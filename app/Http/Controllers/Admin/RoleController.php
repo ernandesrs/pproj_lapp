@@ -88,6 +88,10 @@ class RoleController extends Controller
     {
         $this->authorize('delete', $role);
 
+        if ($role->protected) {
+            throw new \App\Exceptions\UnauthorizedActionException("Can't delete, this role is protected.");
+        }
+
         if ($count = $role->users()->count()) {
             throw new \App\Exceptions\Admin\HasDependentsException("Can't delete, " . $count . " users are linked to this role.");
         }
