@@ -10,8 +10,8 @@ class Setting extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'data'
+        'display_name',
+        'name'
     ];
 
     /**
