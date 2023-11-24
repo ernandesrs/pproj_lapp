@@ -6,6 +6,7 @@ use App\Http\Controllers\Account\MeController;
 use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\Setting\EmailSenderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LappController;
 
@@ -98,5 +99,7 @@ Route::group([
      * 
      */
     Route::apiResource('roles', RoleController::class);
+
+    Route::apiResource('settings/email-senders', EmailSenderController::class);
 
 });
