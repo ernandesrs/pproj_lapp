@@ -27,8 +27,8 @@ class UpdatePasswordMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new \Illuminate\Mail\Mailables\Address(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME')),
-            subject: '[' . env('APP_NAME') . '] ' . $this->user->first_name . ', o seu link de recuperação de senha.',
+            from: new \Illuminate\Mail\Mailables\Address(config('mail.from.address'), config('mail.from.name')),
+            subject: '[' . config('app.name') . '] ' . $this->user->first_name . ', o seu link de recuperação de senha.',
         );
     }
 
