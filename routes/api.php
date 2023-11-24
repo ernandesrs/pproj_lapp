@@ -101,5 +101,6 @@ Route::group([
     Route::apiResource('roles', RoleController::class);
 
     Route::apiResource('settings/email-senders', EmailSenderController::class);
+    Route::patch('settings/email-senders/{emailSender}/default', [EmailSenderController::class, 'makeDefault']);
 
 });

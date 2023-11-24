@@ -92,6 +92,30 @@ class EmailSenderController extends Controller
     }
 
     /**
+     * Change default
+     *
+     * @param EmailSender $emailSender
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function makeDefault(EmailSender $emailSender)
+    {
+        $this->authorize('update', Setting::first());
+
+        $currentDefault = Setting::first()->emailSenders(true);
+        if ($currentDefault && $currentDefault->id != $emailSender->id) {
+            $currentDefault->default = false;
+            $currentDefault->save();
+        }
+
+        $emailSender->default = true;
+        $emailSender->save();
+
+        return $this->success([
+            'email_sender' => $emailSender->fresh()
+        ]);
+    }
+
+    /**
      * Delete
      *
      * @param EmailSender $emailSender
