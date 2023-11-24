@@ -7,6 +7,7 @@ use App\Http\Controllers\Account\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\Setting\EmailSenderController;
+use App\Http\Controllers\Admin\Setting\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LappController;
 
@@ -100,7 +101,11 @@ Route::group([
      */
     Route::apiResource('roles', RoleController::class);
 
+    Route::apiResource('settings', SettingController::class)
+        ->except(['store', 'update', 'delete', 'show']);
+
     Route::apiResource('settings/email-senders', EmailSenderController::class);
     Route::patch('settings/email-senders/{emailSender}/default', [EmailSenderController::class, 'makeDefault']);
+
 
 });

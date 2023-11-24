@@ -57,7 +57,7 @@ class DynamicSettingServiceProvider extends ServiceProvider
             $defaultSettings->settingErrors()->where('type', $mailSettings::class)->updateOrCreate([
                 'type' => $mailSettings::class,
                 'name' => $defaultSettings::nameMaker($mailSettings::class),
-                'message' => 'Default email sending service not configured.',
+                'message' => 'Default email sending service not configured. Emails such as verification and invoices will not be sent.',
                 'priority' => \App\Models\Setting\SettingError::PRIORITY_HIGH,
             ]);
         }
