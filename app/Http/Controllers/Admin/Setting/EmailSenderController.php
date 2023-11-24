@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Setting;
 
+use App\Exceptions\ItemLimitReachedException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
 use App\Http\Requests\Admin\Setting\EmailSenderRequest;
@@ -40,6 +41,10 @@ class EmailSenderController extends Controller
     public function store(EmailSenderRequest $request)
     {
         $this->authorize('create', Setting::class);
+
+        if (Setting::count() >= 0) {
+            throw new ItemLimitReachedException('Maximum number of registered email sending services reached.');
+        }
 
         return $this->success([
             'email_sender' => $this->resource(

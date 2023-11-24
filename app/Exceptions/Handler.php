@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use App\Exceptions\Account\EmailOrPasswordInvalidException;
 use App\Exceptions\Account\HasAlreadyBeenVerifiedException;
 use App\Exceptions\Account\InvalidRegisterVerificationTokenException;
+use App\Exceptions\Account\InvalidUpdatePasswordTokenException;
+use App\Exceptions\Admin\HasDependentsException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -35,7 +37,10 @@ class Handler extends ExceptionHandler
         HasAlreadyBeenVerifiedException::class,
         UnauthorizedActionException::class,
         UnauthenticatedException::class,
-        EmailOrPasswordInvalidException::class
+        EmailOrPasswordInvalidException::class,
+        InvalidUpdatePasswordTokenException::class,
+        HasDependentsException::class,
+        ItemLimitReachedException::class
     ];
 
     /**
