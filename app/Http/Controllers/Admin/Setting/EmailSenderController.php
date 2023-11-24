@@ -57,7 +57,7 @@ class EmailSenderController extends Controller
      */
     public function show(EmailSender $emailSender)
     {
-        $this->authorize('view', $emailSender);
+        $this->authorize('view', Setting::first());
 
         return $this->success([
             'email_sender' => $this->resource(EmailSenderResource::class, $emailSender)
@@ -67,9 +67,15 @@ class EmailSenderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EmailSenderRequest $request, EmailSender $emailSender)
     {
-        //
+        $this->authorize('update', Setting::first());
+
+        $emailSender->update($request->validated());
+
+        return $this->success([
+            'email_sender' => $emailSender->fresh()
+        ]);
     }
 
     /**

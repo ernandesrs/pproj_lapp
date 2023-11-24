@@ -21,7 +21,7 @@ class SettingPolicy
      */
     public function view(User $user, Setting $setting): bool
     {
-        //
+        return $user->permission('view', $setting);
     }
 
     /**
@@ -29,7 +29,7 @@ class SettingPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->permission('create', Setting::class);
     }
 
     /**
@@ -37,7 +37,7 @@ class SettingPolicy
      */
     public function update(User $user, Setting $setting): bool
     {
-        //
+        return $user->permission('update', $setting);
     }
 
     /**

@@ -25,7 +25,7 @@ class EmailSenderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'display_name' => ['required', 'max:20', 'unique:email_senders,display_name' . ($this->emailSender?->id ? (',' . $this->emailSender->id) : '')],
+            'display_name' => ['required', 'max:20', 'unique:email_senders,display_name' . ($this->email_sender?->id ? (',' . $this->email_sender->id) : '')],
             'default' => ['nullable', 'boolean'],
             'host' => ['required', 'string'],
             'port' => ['required', 'numeric'],
