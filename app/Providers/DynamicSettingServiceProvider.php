@@ -20,6 +20,9 @@ class DynamicSettingServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        /**
+         * @var \App\Models\Setting\Setting $defaultSettings
+         */
         $defaultSettings = Setting::where('name', 'default')->firstOrCreate([
             'display_name' => 'Padrão',
             'name' => 'default'
@@ -39,6 +42,23 @@ class DynamicSettingServiceProvider extends ServiceProvider
                 'mail.mailers.smtp.username' => $mailSettings->username,
                 'mail.mailers.smtp.password' => $mailSettings->password,
                 'mail.from.address' => $mailSettings->from_mail
+            ]);
+
+            $err = $defaultSettings->settingErrors()->where('type', $mailSettings::class)->first();
+            if ($err) {
+                $err->delete();
+            }
+        } else {
+            /**
+             * 
+             * Register a error
+             * 
+             */
+            $defaultSettings->settingErrors()->where('type', $mailSettings::class)->updateOrCreate([
+                'type' => $mailSettings::class,
+                'name' => $defaultSettings::nameMaker($mailSettings::class),
+                'message' => 'Default email sending service not configured.',
+                'priority' => \App\Models\Setting\SettingError::PRIORITY_HIGH,
             ]);
         }
     }

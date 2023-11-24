@@ -15,6 +15,16 @@ class Setting extends Model
     ];
 
     /**
+     * settingErrors
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function settingErrors()
+    {
+        return $this->hasMany(SettingError::class);
+    }
+
+    /**
      * Get email senders
      *
      * @param boolean $onlyDefault true to get only default email sender
@@ -24,5 +34,16 @@ class Setting extends Model
     {
         $hasMany = $this->hasMany(EmailSender::class);
         return $onlyDefault ? $hasMany->where('default', '=', true)->first() : $hasMany;
+    }
+
+    /**
+     * Name maker
+     *
+     * @param string $class
+     * @return string
+     */
+    public static function nameMaker(string $class)
+    {
+        return strtolower(str_replace(['\\'], '_', $class)) . '_error';
     }
 }
