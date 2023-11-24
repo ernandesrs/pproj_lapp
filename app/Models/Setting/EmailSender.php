@@ -9,17 +9,28 @@ class EmailSender extends Model
 {
     use HasFactory;
 
+    /**
+     * Fillable fields
+     *
+     * @var array
+     */
     protected $fillable = [
         'display_name',
         'name',
         'host',
         'port',
+        'default',
         'encrypt',
         'username',
         'password',
         'from_mail'
     ];
 
+    /**
+     * Hidden fields
+     *
+     * @var array
+     */
     protected $hidden = [
         'username',
         'password',

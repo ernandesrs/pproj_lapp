@@ -65,13 +65,26 @@ class EmailSenderController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update
+     *
+     * @param EmailSenderRequest $request
+     * @param EmailSender $emailSender
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(EmailSenderRequest $request, EmailSender $emailSender)
     {
         $this->authorize('update', Setting::first());
 
-        $emailSender->update($request->validated());
+        $validated = $request->validated();
+        if ($validated['default'] ?? false) {
+            $default = Setting::first()->emailSenders(true);
+            if ($default) {
+                $default->default = false;
+                $default->save();
+            }
+        }
+
+        $emailSender->update($validated);
 
         return $this->success([
             'email_sender' => $emailSender->fresh()
@@ -79,10 +92,17 @@ class EmailSenderController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete
+     *
+     * @param EmailSender $emailSender
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(string $id)
+    public function destroy(EmailSender $emailSender)
     {
-        //
+        $this->authorize('delete', Setting::first());
+
+        $emailSender->delete();
+
+        return $this->success();
     }
 }

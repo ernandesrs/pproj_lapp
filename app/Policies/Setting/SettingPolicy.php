@@ -45,22 +45,6 @@ class SettingPolicy
      */
     public function delete(User $user, Setting $setting): bool
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Setting $setting): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Setting $setting): bool
-    {
-        //
+        return $user->permission('delete', $setting);
     }
 }
