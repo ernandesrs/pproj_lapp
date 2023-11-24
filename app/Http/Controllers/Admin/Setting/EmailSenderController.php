@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
 use App\Http\Resources\Admin\Setting\EmailSenderResource;
 use App\Models\Setting\EmailSender;
+use App\Models\Setting\Setting;
 use Illuminate\Http\Request;
 
 class EmailSenderController extends Controller
@@ -19,6 +20,8 @@ class EmailSenderController extends Controller
      */
     public function index()
     {
+        $this->authorize("viewAny", Setting::class);
+
         return $this->success([
             'email_senders' => $this->resourceCollection(
                 EmailSenderResource::class,

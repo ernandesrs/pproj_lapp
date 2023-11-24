@@ -35,6 +35,9 @@ class Role extends Model
         ],
         \App\Models\Role::class => [
             ...self::defaultManageablesActions
+        ],
+        \App\Models\Setting\Setting::class => [
+            ...self::defaultManageablesActions
         ]
     ];
 
