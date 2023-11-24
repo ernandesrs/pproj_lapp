@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Setting;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
+use App\Http\Requests\Admin\Setting\EmailSenderRequest;
 use App\Http\Resources\Admin\Setting\EmailSenderResource;
 use App\Models\Setting\EmailSender;
 use App\Models\Setting\Setting;
@@ -31,15 +32,28 @@ class EmailSenderController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store
+     *
+     * @param EmailSenderRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(EmailSenderRequest $request)
     {
-        //
+        $this->authorize('create', Setting::class);
+
+        return $this->success([
+            'email_sender' => $this->resource(
+                EmailSenderResource::class,
+                Setting::first()->emailSenders()->create($request->validated())
+            )
+        ]);
     }
 
     /**
-     * Display the specified resource.
+     * Show
+     *
+     * @param EmailSender $emailSender
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(EmailSender $emailSender)
     {

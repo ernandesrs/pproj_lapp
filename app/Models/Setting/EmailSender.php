@@ -14,6 +14,7 @@ class EmailSender extends Model
         'name',
         'host',
         'port',
+        'encrypt',
         'username',
         'password',
         'from_mail'
@@ -21,7 +22,8 @@ class EmailSender extends Model
 
     protected $hidden = [
         'username',
-        'password'
+        'password',
+        'from_mail'
     ];
 
     /**
