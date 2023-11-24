@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\Setting;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
 use App\Http\Resources\Admin\Setting\EmailSenderResource;
-use App\Models\Setting\EmailSender;
 use App\Models\Setting\Setting;
 use Illuminate\Http\Request;
 
@@ -25,7 +24,7 @@ class EmailSenderController extends Controller
         return $this->success([
             'email_senders' => $this->resourceCollection(
                 EmailSenderResource::class,
-                EmailSender::all()
+                Setting::first()->emailSenders()->get()
             )
         ]);
     }
