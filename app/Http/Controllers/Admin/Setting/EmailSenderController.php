@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Setting;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
 use App\Http\Resources\Admin\Setting\EmailSenderResource;
+use App\Models\Setting\EmailSender;
 use App\Models\Setting\Setting;
 use Illuminate\Http\Request;
 
@@ -40,9 +41,13 @@ class EmailSenderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(EmailSender $emailSender)
     {
-        //
+        $this->authorize('view', $emailSender);
+
+        return $this->success([
+            'email_sender' => $this->resource(EmailSenderResource::class, $emailSender)
+        ]);
     }
 
     /**
