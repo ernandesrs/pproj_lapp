@@ -17,7 +17,8 @@ class SettingResource extends JsonResource
         return array_merge(
             parent::toArray($request),
             [
-                'setting_errors' => $this->settingErrors()->get()
+                'setting_errors' => $this->settingErrors()->get(),
+                'email_senders' => \App\Http\Resources\Admin\Setting\EmailSenderResource::collection($this->emailSenders()->get()),
             ]
         );
     }
