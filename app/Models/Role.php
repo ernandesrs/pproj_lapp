@@ -54,6 +54,15 @@ class Role extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'manageables' => 'array',
+    ];
+
+    /**
      * Create
      *
      * @param array $attributes
@@ -140,7 +149,7 @@ class Role extends Model
     protected static function booted()
     {
         static::retrieved(function (Role $role) {
-            $role->manageables = self::addExistingUncontainedManageables((array) json_decode($role->manageables));
+            $role->manageables = self::addExistingUncontainedManageables($role->manageables);
         });
     }
 
