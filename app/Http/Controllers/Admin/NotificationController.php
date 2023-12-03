@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TraitApiController;
+use App\Http\Resources\Admin\NotificationResource;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -16,8 +17,8 @@ class NotificationController extends Controller
     public function index()
     {
         return $this->success([
-            'notifications' => \Auth::user()->notifications,
-            'unread_notifications' => \Auth::user()->unreadNotifications
+            'notifications' => $this->resourceCollection(NotificationResource::class, \Auth::user()->notifications),
+            'unread_notifications' => $this->resourceCollection(NotificationResource::class, \Auth::user()->unreadNotifications)
         ]);
     }
 
