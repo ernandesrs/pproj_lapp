@@ -41,6 +41,9 @@ class NotificationController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function markAsUnread(string $notification) {
+        /**
+         * @var \Illuminate\Database\Eloquent\Model $notf
+         */
         $notf = \Auth::user()->notifications()->where('id', $notification)->firstOrFail();
 
         $notf->read_at = null;
