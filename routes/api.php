@@ -108,6 +108,9 @@ Route::group([
     Route::apiResource('settings/email-senders', EmailSenderController::class);
     Route::patch('settings/email-senders/{emailSender}/default', [EmailSenderController::class, 'makeDefault']);
 
-    Route::apiResource('notifications', NotificationController::class);
+    Route::apiResource('notifications', NotificationController::class)
+        ->except(['store', 'update', 'show']);
+    Route::patch('notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead']);
+    Route::patch('notifications/{notification}/mark-as-unread', [NotificationController::class, 'markAsUnread']);
 
 });

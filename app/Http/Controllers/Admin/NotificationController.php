@@ -7,15 +7,13 @@ use App\Http\Controllers\TraitApiController;
 use App\Http\Resources\Admin\NotificationResource;
 use Illuminate\Http\Request;
 
-class NotificationController extends Controller
-{
+class NotificationController extends Controller {
     use TraitApiController;
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index() {
         return $this->success([
             'notifications' => $this->resourceCollection(NotificationResource::class, \Auth::user()->notifications),
             'unread_notifications' => $this->resourceCollection(NotificationResource::class, \Auth::user()->unreadNotifications)
@@ -23,34 +21,45 @@ class NotificationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Mark as read a notification
+     *
+     * @param string $notification
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
-    {
-        //
+    public function markAsRead(string $notification) {
+        $notf = \Auth::user()->notifications()->where('id', $notification)->firstOrFail();
+
+        $notf->markAsRead();
+
+        return $this->success();
     }
 
     /**
-     * Display the specified resource.
+     * Mark as unread a notification
+     *
+     * @param string $notification
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(string $id)
-    {
-        //
+    public function markAsUnread(string $notification) {
+        $notf = \Auth::user()->notifications()->where('id', $notification)->firstOrFail();
+
+        $notf->read_at = null;
+        $notf->save();
+
+        return $this->success();
     }
 
     /**
-     * Update the specified resource in storage.
+     * Delete a notification
+     *
+     * @param string $notification
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    public function destroy(string $notification) {
+        $notf = \Auth::user()->notifications()->where('id', $notification)->firstOrFail();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $notf->delete();
+
+        return $this->success();
     }
 }
