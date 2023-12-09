@@ -45,7 +45,7 @@ class NotificationController extends Controller
     {
         $ids = $this->validateNotificationIds($request);
 
-        foreach ($ids['notifications'] as $id) {
+        foreach ($ids['notification_ids'] as $id) {
             $this->notificationStatus($id);
         }
 
@@ -98,7 +98,7 @@ class NotificationController extends Controller
     {
         $ids = $this->validateNotificationIds($request);
 
-        foreach ($ids['notifications'] as $id) {
+        foreach ($ids['notification_ids'] as $id) {
             $ntf = \Auth::user()->notifications()->where('id', $id)->first();
             if ($ntf) {
                 $ntf->delete();
@@ -117,8 +117,8 @@ class NotificationController extends Controller
     private function validateNotificationIds(Request $request)
     {
         return \Validator::make($request->all(), [
-            'notifications' => ['nullable', 'array'],
-            'notifications.*' => ['string']
+            'notification_ids' => ['nullable', 'array'],
+            'notification_ids.*' => ['string']
         ])->validate();
     }
 }
