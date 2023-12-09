@@ -110,7 +110,10 @@ Route::group([
 
     Route::apiResource('notifications', NotificationController::class)
         ->except(['store', 'update', 'show']);
-    Route::patch('notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead']);
-    Route::patch('notifications/{notification}/mark-as-unread', [NotificationController::class, 'markAsUnread']);
+    Route::delete('notifications/delete/many', [NotificationController::class, 'destroyMany']);
+    Route::patch('notifications/{notification}/mark-as-read', [NotificationController::class, 'changeNotificationStatus']);
+    Route::patch('notifications/{notification}/mark-as-unread', [NotificationController::class, 'changeNotificationStatus']);
+    Route::patch('notifications/mark-many-as-read', [NotificationController::class, 'changeNotificationsStatus']);
+    Route::patch('notifications/mark-many-as-unread', [NotificationController::class, 'changeNotificationsStatus']);
 
 });
