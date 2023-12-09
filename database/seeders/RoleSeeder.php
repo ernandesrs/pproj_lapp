@@ -24,12 +24,6 @@ class RoleSeeder extends Seeder
             'protected' => false,
             'is_super' => false
         ]);
-
-        \App\Models\Role::create([
-            'name' => 'Visitor',
-            'protected' => false,
-            'is_super' => false
-        ]);
     }
 
     /**
