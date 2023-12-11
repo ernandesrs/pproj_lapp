@@ -5,19 +5,26 @@ namespace App\Providers;
 use App\Models\Setting\Setting;
 use Illuminate\Support\ServiceProvider;
 
-class DynamicSettingServiceProvider extends ServiceProvider {
+class DynamicSettingServiceProvider extends ServiceProvider
+{
     /**
      * Register services.
      */
-    public function register(): void {
+    public function register(): void
+    {
         //
     }
 
     /**
      * Bootstrap services.
      */
-    public function boot(): void {
-        self::smtpMailSetting();
+    public function boot(): void
+    {
+        try {
+            self::smtpMailSetting();
+        } catch (\Exception $e) {
+            // 
+        }
     }
 
     /**
@@ -25,7 +32,8 @@ class DynamicSettingServiceProvider extends ServiceProvider {
      *
      * @return \App\Models\Setting\Setting $defaultSettings
      */
-    private static function defaultSetting() {
+    private static function defaultSetting()
+    {
         return Setting::where('name', 'default')->firstOrCreate([
             'display_name' => 'Padrão',
             'name' => 'default'
@@ -37,9 +45,10 @@ class DynamicSettingServiceProvider extends ServiceProvider {
      * SMTP MAIL SETTINGS
      * 
      */
-    private static function smtpMailSetting() {
+    private static function smtpMailSetting()
+    {
         $mailSettings = self::defaultSetting()->emailSenders(true);
-        if($mailSettings) {
+        if ($mailSettings) {
             config([
                 'mail.mailers.smtp.host' => $mailSettings->host,
                 'mail.mailers.smtp.port' => $mailSettings->port,
@@ -50,7 +59,7 @@ class DynamicSettingServiceProvider extends ServiceProvider {
             ]);
 
             $err = self::defaultSetting()->settingErrors()->where('type', \App\Models\Setting\EmailSender::class)->first();
-            if($err) {
+            if ($err) {
                 $err->delete();
             }
         } else {
