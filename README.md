@@ -28,7 +28,9 @@ O seguintes recursos estão atualmente implementados.
 2. Acesse a pasta do projeto:
 > cd pproj_lapp
 
-3. Copie, cole e renomeie o arquivo '.env.example' para '.env'. Faça as devidas configurações, conforme a tabela abaixo:
+3. Copie, cole e renomeie o arquivo '.env.example' para '.env'.
+Faça as devidas configurações, conforme a tabela abaixo:
+
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
 | FRONT_URL_BASE | Opcional. | URL do frontend que fará uso da API |
