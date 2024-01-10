@@ -32,9 +32,7 @@ class EmailSender extends Model
      * @var array
      */
     protected $hidden = [
-        'username',
         'password',
-        'from_mail'
     ];
 
     /**

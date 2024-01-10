@@ -24,15 +24,22 @@ class EmailSenderRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'display_name' => ['required', 'max:20', 'unique:email_senders,display_name' . ($this->email_sender?->id ? (',' . $this->email_sender->id) : '')],
-            'default' => ['nullable', 'boolean'],
-            'host' => ['required', 'string'],
-            'port' => ['required', 'numeric'],
-            'encrypt' => ['required', 'string'],
-            'username' => ['required', 'string'],
-            'password' => ['required', 'string'],
-            'from_mail' => ['required', 'email']
+        $rules = [
+            'display_name' => ['required', 'max:20', 'unique:email_senders,display_name' . ($this->email_sender?->id ? (',' . $this->email_sender->id) : '')]
         ];
+
+        if (!$this->email_sender) {
+            $rules += [
+                'default' => ['nullable', 'boolean'],
+                'host' => ['required', 'string'],
+                'port' => ['required', 'numeric'],
+                'encrypt' => ['required', 'string'],
+                'username' => ['required', 'string'],
+                'password' => ['required', 'string'],
+                'from_mail' => ['required', 'email']
+            ];
+        }
+
+        return $rules;
     }
 }

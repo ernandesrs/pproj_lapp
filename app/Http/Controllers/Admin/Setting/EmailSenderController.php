@@ -42,7 +42,7 @@ class EmailSenderController extends Controller
     {
         $this->authorize('create', Setting::class);
 
-        if (Setting::count() >= 0) {
+        if (Setting::count() >= 5) {
             throw new ItemLimitReachedException('Maximum number of registered email sending services reached.');
         }
 
