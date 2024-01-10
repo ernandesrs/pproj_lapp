@@ -1,5 +1,20 @@
 # LAPP - Laravel App
-Este projeto é uma API em Laravel 10.
+Este projeto é uma API em Laravel 10, criada para estudo de criação de APIs com Laravel.
+
+# PRINTS
+Alguns prints da API.
+
+#### FAZENDO LOGIN
+![lapp_login](https://github.com/ernandesrs/pproj_lapp/assets/70029077/c1a49874-d7e8-44d6-a576-c49b2c3abd10)
+
+#### LISTANDO USUÁRIOS NA ÁREA ADMINISTRATIVA
+![lapp_listing_users](https://github.com/ernandesrs/pproj_lapp/assets/70029077/b979b669-e921-478c-b66e-247a272373ef)
+
+#### LISTANDO FUNÇÕES/CARGOS NA ÁREA ADMINISTRATIVA
+![lapp_listing_roles](https://github.com/ernandesrs/pproj_lapp/assets/70029077/e0ecbd12-9ba5-4ae3-9f9d-09aa77ca41a3)
+
+#### REALIZANDO UMA AÇÃO NÃO AUTORIZADA
+![lapp_action_unauthorized](https://github.com/ernandesrs/pproj_lapp/assets/70029077/ce40078c-457f-4194-8075-2347270bc180)
 
 # DOCUMENTAÇÃO
 A documentação da API pode ser acessada [por aqui](https://documenter.getpostman.com/view/15369452/2s9YR57vX9).
